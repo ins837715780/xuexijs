@@ -1,5 +1,4 @@
 name:  daily
-
 on:
   workflow_dispatch:
   schedule:
