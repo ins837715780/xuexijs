@@ -2,26 +2,22 @@ name:  daily
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 2 * * *'
+     - cron: '0 2 * * *'
+  watch:
+    types:  daily
 jobs:
   build:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
-    env:
-        User: ${{ github.event.repository.owner.id }}
     steps:
-
-      - name: Use Node.js 14.x
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 12.x
       - name: npm install
         run: |
           npm install
-          npm install cron
-          npm install request
-          npm install md5-node
-          node Task/dsjtx1.js
-      - name: 'run 【ttdt】'
+      - name: '运行 【答题】'
         run: |
-          node Task/ttdt.js
+          node ttdt.js
