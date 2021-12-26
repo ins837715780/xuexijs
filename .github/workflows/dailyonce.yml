@@ -20,4 +20,4 @@ jobs:
           npm install
       - name: '运行 【答题】'
         run: |
-          node ttdt.js
+          node Task/ttdt.js
