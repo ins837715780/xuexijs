@@ -17,7 +17,6 @@ jobs:
           node-version: 14.x
       - name: npm install
         run: |
-          cd ~/js
           npm install
           npm install cron
           npm install request
@@ -25,5 +24,4 @@ jobs:
           node Task/dsjtx1.js
       - name: 'run 【ttdt】'
         run: |
-          cd ~/js   
           node Task/ttdt.js
