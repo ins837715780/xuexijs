@@ -11,9 +11,6 @@ jobs:
         User: ${{ github.event.repository.owner.id }}
     steps:
 
-      - name: Checkout
-        run: |
-          git clone https://github.com/cxk1111/private.git ~/js
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
@@ -25,9 +22,6 @@ jobs:
           npm install cron
           npm install request
           npm install md5-node
-      - name: 'run 【dsj】'
-        run: |
-          cd ~/js   
           node Task/dsjtx1.js
       - name: 'run 【ttdt】'
         run: |
