@@ -19,7 +19,8 @@ let theresult
 let index
 $.message = "";
 imeiarr = [
-    "DEEAB060-A488-44AC-8643-BCD4D1B38C84"
+    "DEEAB060-A488-44AC-8643-BCD4D1B38C84",
+    "9A4FF051-32B5-47C8-BB52-456DCB898C1D"
 ]
 !(async () => {
     await all();
