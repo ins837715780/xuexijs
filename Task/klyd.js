@@ -1,4 +1,4 @@
-process.env.klyd_data = "udtauth3=f2f7bnR%2FO8pE3BRfw9KWNDCdf2BCtDzDZRUYHyXtWtSoiC2HVjB5hmkIbahiwggevr%2BcMrw0mOKiVCEM4kLIY9H%2BVC60%2FBW%2F4wytTk19fbfwIcJVUXtS34wye%2F%2Fh3%2FWeL9jrAeYqodYB%2FeDfSa5A1VLELvgQ%2FL7fnFNT9fKwb9U; PHPSESSID=00sbc8128m7ltgij99vvgi2pon&Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.43(0x18002b2f) NetType/4G Language/zh_CN@PHPSESSID=nkafgkuas71cace9k7etr1o1r4; udtauth3=d7b94qa9Uvf8pdb5O7A0Z2scJW4YpB6Xnlcb7OibjEEuULkNJhjm2eEVuREQWaz5NqrTZmrl71bDFqEVYMg1lI2ZnSMQKOCwXsxVMDmuuxuDqZVWPYz65O6JHkbGvczQrTVkqfcMa2YfubKtfYD8mmWQGpQUeYb6Z7sl%2BYE3nYI&Mozilla/5.0 (Linux; Android 13; hi6250 Build/TQ1A.230205.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.5563.116 Mobile Safari/537.36 XWEB/1110039 MMWEBSDK/20230805 MMWEBID/9600 MicroMessenger/8.0.42.2460(0x28002A58) WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64";
+
 /*
 可乐阅读
 
@@ -255,7 +255,7 @@ async function getUsers(envVarName, callback) {
   let userArray = [];
 
   // 获取环境变量值
-  let envValue = process.env[envVarName]||$.getdata(envVarName) ;
+  let envValue = $.getdata(envVarName) ;
 
   // 定义分隔符数组
   let separators = ["\n", "#", "@"];
