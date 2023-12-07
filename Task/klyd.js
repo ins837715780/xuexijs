@@ -1,4 +1,4 @@
-
+process.env.klyd_data = "udtauth3=f2f7bnR%2FO8pE3BRfw9KWNDCdf2BCtDzDZRUYHyXtWtSoiC2HVjB5hmkIbahiwggevr%2BcMrw0mOKiVCEM4kLIY9H%2BVC60%2FBW%2F4wytTk19fbfwIcJVUXtS34wye%2F%2Fh3%2FWeL9jrAeYqodYB%2FeDfSa5A1VLELvgQ%2FL7fnFNT9fKwb9U; PHPSESSID=00sbc8128m7ltgij99vvgi2pon&Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.43(0x18002b2f) NetType/4G Language/zh_CN@PHPSESSID=nkafgkuas71cace9k7etr1o1r4; udtauth3=d7b94qa9Uvf8pdb5O7A0Z2scJW4YpB6Xnlcb7OibjEEuULkNJhjm2eEVuREQWaz5NqrTZmrl71bDFqEVYMg1lI2ZnSMQKOCwXsxVMDmuuxuDqZVWPYz65O6JHkbGvczQrTVkqfcMa2YfubKtfYD8mmWQGpQUeYb6Z7sl%2BYE3nYI&Mozilla/5.0 (Linux; Android 13; hi6250 Build/TQ1A.230205.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.5563.116 Mobile Safari/537.36 XWEB/1110039 MMWEBSDK/20230805 MMWEBID/9600 MicroMessenger/8.0.42.2460(0x28002A58) WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64";
 /*
 可乐阅读
 
@@ -36,7 +36,7 @@ class UserInfo {
   }
 
 // 获取指定账号的请求地址
-async  getUrl() {
+async getUrl(){
   const requestData = {
     url: "https://m.cdcd.plus/entry/new_ld",
     headers: {
@@ -46,17 +46,18 @@ async  getUrl() {
       "Sec-Fetch-Dest": "empty",
       "Sec-Fetch-Mode": "cors",
       "Sec-Fetch-Site": "cross-site",
-      "User-Agent": this.UA 
+      "User-Agent": this.UA
     }
   };
   // 发起异步的POST请求
   return new Promise(resolve => {
     $.post(requestData, async (err, resp, data) => {
       try {
-          var response = JSON.parse(data);
-          this.yemian = (response.status == 200 && response.data) ? response.data.jump : "";
+       // console.log(resp);
+          var data = JSON.parse(data);
+          this.yemian = (resp.status == 200 && data) ? data.jump : "";
           if (this.yemian) {
-            await processTask();
+           await this.processTask();
           } else {
             console.log("去求吧！！！初始化识别，平台跑路了");
           }
@@ -86,10 +87,10 @@ async  processTask() {
   // 发起异步的POST请求
   return new Promise(resolve => {
     $.get(requestData, async (err, resp, data) => {
-      try {
-          var response = JSON.parse(data);
-          if (!response.data.code ) {
-            await getTask();
+      try {     
+          var data = JSON.parse(data);
+          if (!data.code ) {
+            await this.getTask();
           } else {
             console.log("账号检测不通过");
           }
@@ -121,9 +122,9 @@ async  getTask(accountIndex) {
   return new Promise(resolve => {
     $.get(requestData, async (err, resp, data) => {
       try {
-          var response = JSON.parse(data);
-          this.ui = (response.data && response.data.jump) ? response.data.jump : "";
-          this.ui ? await processGeck() : console.log("获取任务失败");
+          var data = JSON.parse(data);
+          this.ui = (data && data.jump) ? data.jump : "";
+          this.ui ? await this.processGeck() : console.log("获取任务失败");
       } catch (e) {
         // 处理异常
       } finally {
@@ -150,9 +151,8 @@ async  processGeck() {
   return new Promise(resolve => {
     $.get(requestData, async (err, resp, data) => {
       try {
-          var response = JSON.parse(data);
-          this.cookie = response.headers["set-cookie"][0].split(";")[0];
-          this.cookie ? await startTask() : console.log("登录失败");
+          this.cookie = resp.headers["set-cookie"][0].split(";")[0];
+          this.cookie ? await this.startTask() : console.log("登录失败");
       } catch (e) {
         // 处理异常
       } finally {
@@ -166,14 +166,9 @@ async  processGeck() {
 async  startTask( jkey = "") {
   const requestData = {
     url: this.ui.split("/tuijian/")[0] + "/tuijian/do_read",
-    params: {
-      "for": "",
-      "zs": "",
-      "pageshow": "",
-      "r": 1e-17 * (await getRandomNumber(90000000000000000, 100000000000000000)),
-      "iu": this.ui.split("?iu=")[1],
-      "jkey": jkey
-    },
+    url: `${this.ui.split("/tuijian/")[0]}/tuijian/do_read` +
+    `?for=&zs=&pageshow=&r=${1e-17 * (await getRandomNumber(90000000000000000, 100000000000000000))}` +
+    `&iu=${this.ui.split("?iu=")[1]}&jkey=${jkey}`,
     headers: {
       "Accept": "*/*",
       "Accept-Language": "*",
@@ -189,13 +184,13 @@ async  startTask( jkey = "") {
   return new Promise(resolve => {
     $.get(requestData, async (err, resp, data) => {
       try {
-          var response = JSON.parse(data);
-          jkey ? console.log(response.data.success_msg) : "";
+          var data = JSON.parse(data);
+          jkey ? console.log(data.success_msg) : "";
 
-          if (response.data.success_msg == "本轮阅读已完成" || response.data.success_msg == "检测未通过" ) {
+          if (data.success_msg == "本轮阅读已完成" || data.success_msg == "检测未通过" ) {
             console.log("阅读完毕或者检测未通过");
           } else {
-            let taskUrl = response.data.url;
+            let taskUrl = data.url;
             let timestamp = await getTimestamp(taskUrl);
             console.log("微信任务", taskUrl);
         
@@ -205,7 +200,7 @@ async  startTask( jkey = "") {
             } else {
               await wait(await getRandomNumber(8000, 10000), "等待下次阅读");
             }
-            await startTask( response.data.jkey);
+            await this.startTask(data.jkey);
           }
       } catch (e) {
         // 处理异常
@@ -234,26 +229,13 @@ async  startTask( jkey = "") {
     return userInfo;
   });
 
-  // 根据并发情况执行主函数
-  if (Concurrency) {
-    // 并发执行，使用 Promise.all 同时处理所有用户
-    let promiseList = [];
-    userArray.forEach(async user => {
-      promiseList.push(main(user));
-    });
-    await Promise.all(promiseList);
-  } else {
-    // 顺序执行
+
     for (let user of userArray) {
       await main(user);
     }
-  }
+  
 
-  // 根据条件发送通知
-  if (get_msg == 1) {
-    // 判断 notify 和 subTitle 是否存在，存在则发送通知
-    notify && subTitle && (await notify.sendNotify($.name, subTitle));
-  }
+
 })()
   // 捕获异常并输出
   .catch(err => console.log(err))
