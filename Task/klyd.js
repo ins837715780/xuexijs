@@ -54,7 +54,6 @@ async getUrl(){
     $.post(requestData, async (err, resp, data) => {
       try {
        // console.log(resp);
-          var data = JSON.stringify(data);
           this.yemian = (resp.status == 200 && data) ? data.jump : "";
           if (this.yemian) {
            await this.processTask();
@@ -88,7 +87,6 @@ async  processTask() {
   return new Promise(resolve => {
     $.get(requestData, async (err, resp, data) => {
       try {     
-          var data = JSON.stringify(data);
           if (!data.code ) {
             await this.getTask();
           } else {
@@ -122,7 +120,6 @@ async  getTask(accountIndex) {
   return new Promise(resolve => {
     $.get(requestData, async (err, resp, data) => {
       try {
-          var data = JSON.stringify(data);
           this.ui = (data && data.jump) ? data.jump : "";
           this.ui ? await this.processGeck() : console.log("获取任务失败");
       } catch (e) {
@@ -184,7 +181,6 @@ async  startTask( jkey = "") {
   return new Promise(resolve => {
     $.get(requestData, async (err, resp, data) => {
       try {
-          var data = JSON.stringify(data);
           jkey ? console.log(data.success_msg) : "";
 
           if (data.success_msg == "本轮阅读已完成" || data.success_msg == "检测未通过" ) {
