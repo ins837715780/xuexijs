@@ -1,5 +1,6 @@
 const _0x111c11 = _0x48a110("饿了么"),
   _0x1e5e86 = require("got"),
+  
   {
     CookieJar: _0x4f8312
   } = require("tough-cookie"),
