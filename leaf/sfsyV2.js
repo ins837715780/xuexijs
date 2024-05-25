@@ -1,3 +1,22 @@
+/*
+顺丰速运 v2.19
+
+包含积分任务, 采蜜游戏, 顺丰会员日
+
+采蜜游戏入口: 我的-积分抽奖-拉到最下面收件兑奖
+积分可以换快递优惠券,爱奇艺周卡,肯德基代金券和各种实物
+采蜜的蜂蜜可以换快递券和实物
+默认不运行采蜜游戏, 需要运行的设置变量 sfsyBee 为true (字符串true)
+export sfsyBee="true"
+
+打开小程序或APP-我的-积分, 捉以下几种url之一,把整个url放到变量 sfsyUrl 里,多账号换行分割
+https://mcs-mimp-web.sf-express.com/mcs-mimp/share/weChat/shareGiftReceiveRedirect
+https://mcs-mimp-web.sf-express.com/mcs-mimp/share/app/shareRedirect
+每天跑一到两次就行
+
+cron: 11 6,9,12,15,18 * * *
+const $ = new Env("顺丰速运");
+*/
 const _0xef7c3f = _0x454721("顺丰速运"),
   _0x5a0d3c = require("got"),
   _0x2e7a56 = require("crypto-js"),
