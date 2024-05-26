@@ -1,3 +1,30 @@
+/*
+腾讯视频-福利中心
+邀请码：9676
+邀请注册：https://fuli.v.qq.com/h5/activity/welfare_center_new/?ptag=cygn&z=1%23/&source=page_id%3Ddefault%26pgid%3Dpage_personal_center%26page_type%3Dpersonal%26is_interactive_flag%3D1%26pg_clck_flag%3D1%26eid%3Dwelfare_center%26mod_id%3Dsp_mycntr_common%26sectiontype%3D2%26styletype%3D202%26flush_num%3D0%26section_idx%3D0%26red_dot%3D0%26mod_title%3D%25E5%25B8%25B8%25E7%2594%25A8%25E5%258A%259F%25E8%2583%25BD%26blocktype%3D6001%26mod_idx%3D5%26item_idx%3D3%26layouttype%3D2%26action_pos%3Djump&hidetitlebar=0&isDarkMode=0&uiType=REGULAR&url_from=share&second_share=0&share_from=wxf#/invite?svuid=ZmTq9w2U7w023AAKuxE_Og&gpid=3&z=1
+
+签到+任务+互助
+签到+任务有30+金币。互助似乎会黑，不黑的话一天助力满3次有60金币
+
+腾讯视频app->我的->常用功能-福利兑换，捉里面pbaccess.video.qq.com的CK
+放到txspCookie里，多账号换行隔开
+
+要想CK不过期的话，需要捉小程序[腾讯视频]的refresh_token
+登录后重新进入小程序，搜pbaccess.video.qq.com域名下url含有RpcLogin的这个包
+把返回body里的refresh_token添加到对应账号的ck后面： export txspCookie="原来的ck; refresh_token=xxxxx;"
+
+重写：
+[task_local]
+#腾讯视频-福利中心
+3 0,8 * * * https://raw.githubusercontent.com/leafTheFish/DeathNote/main/txspfl.js, tag=腾讯视频-福利中心, enabled=true
+[rewrite_local]
+https://pbaccess.video.qq.com/activity/welfare_center/queryUserActivity url script-request-header https://raw.githubusercontent.com/leafTheFish/DeathNote/main/txspfl.js
+[MITM]
+hostname = pbaccess.video.qq.com
+
+cron: 3 0,10 * * *
+const $ = new Env("腾讯视频-福利中心")
+*/
 const _0x1b79bf = new _0x4ee126("腾讯视频-福利中心");
 let _0x5e79bc = ["\n", "@", "&"],
   _0x150e6d,
